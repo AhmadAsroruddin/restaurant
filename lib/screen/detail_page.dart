@@ -15,71 +15,84 @@ class DetailPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           ClipRRect(
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20),
-            ),
+            borderRadius: const BorderRadius.all(Radius.circular(12)),
             child: Image.network(
               args.pictureId,
-              fit: BoxFit.fill,
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 15),
-            child: Text(
-              args.name,
-              style: const TextStyle(fontSize: 30),
+              height: MediaQuery.of(context).size.height * 0.4,
             ),
           ),
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 15),
-            child: Row(
-              children: <Widget>[
-                const Icon(Icons.add_location),
-                Text(
-                  args.city,
-                  style: const TextStyle(fontSize: 15),
-                )
-              ],
+            child: ListTile(
+              title: Text(
+                args.name,
+                style:
+                    const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(
+                args.city,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              trailing: Text('rating ${args.rating.toString()}'),
             ),
           ),
-          const SizedBox(
-            height: 30,
-          ),
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 15),
+            height: MediaQuery.of(context).size.height * 0.12,
+            margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
             child: Text(args.description),
           ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            child: const Text(
-              "FOODS",
-              style: TextStyle(fontSize: 20),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: args.menus['foods'].length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: Column(
-                    children: <Widget>[
-                      Image.asset(
-                        'assets/food.png',
-                        width: 100,
-                        height: 100,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Expanded(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 15),
+                      child: const Text(
+                        "Foods",
+                        style: TextStyle(fontSize: 25),
                       ),
-                      Text(args.menus['foods'][index]['name'].toString())
-                    ],
-                  ),
-                );
-              },
-            ),
-          )
+                    ),
+                    SizedBox(
+                      height: 100,
+                      child: ListView.builder(
+                        itemCount: args.menus['foods'].length,
+                        itemBuilder: ((context, index) {
+                          return Text(
+                              args.menus['foods'][index]['name'].toString());
+                        }),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 15),
+                      child: const Text(
+                        "Beverage",
+                        style: TextStyle(fontSize: 25),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 100,
+                      child: ListView.builder(
+                        itemCount: args.menus['drinks'].length,
+                        itemBuilder: ((context, index) {
+                          return Text(args.menus['drinks'][index]['name']);
+                        }),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
